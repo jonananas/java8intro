@@ -41,7 +41,7 @@ public class JDBCRunnerTest {
 	PreparedStatement statement;
 
 	Logger log = LoggerFactory.getLogger(JDBCRunner.class);
-	
+
 	@Before
 	public void setup() throws SQLException {
 		when(ds.getConnection()).thenReturn(connection);
@@ -67,73 +67,59 @@ public class JDBCRunnerTest {
 		verify(connection, Mockito.times(1)).close();
 		verify(statement, Mockito.times(1)).close();
 	}
-	
+
 	@Test
-	public void usage() throws Exception {
-		JDBCRunner.runQuery("SELECT * FROM ...", ds, statement -> statement.executeQuery());
+	public void usage() {
+		JDBCRunner.runQuery("SELECT * FROM ...", ds, st -> st.executeQuery());
 	}
-	
+
 	@Test
-	public void shouldPropagateException() throws Exception {
-		
-		assertThatThrownBy(() -> JDBCRunner.runQuery("", ds, 
-				throwRuntimeException("lambda")
-			)
-		)
-		.hasMessage("lambda");
+	public void shouldPropagateException() {
+
+		assertThatThrownBy(() -> JDBCRunner.runQuery("", ds, throwRuntimeException("lambda"))).hasMessage("lambda");
 	}
 
 	@Test
 	public void shouldSuppressStatementCloseException() throws Exception {
 		doThrow(new SQLException("sqlexception")).when(statement).close();
-		
-		assertThatThrownBy(() -> JDBCRunner.runQuery("", ds, 
-				throwRuntimeException("lambda")
-			)
-		)
-		.has(condition(ex -> containsSuppressedMessage(ex, "sqlexception")));
+
+		assertThatThrownBy(() -> JDBCRunner.runQuery("", ds, throwRuntimeException("lambda")))
+				.has(condition(ex -> containsSuppressedMessage(ex, "sqlexception")));
 	}
 
 	@Test
 	public void shouldSuppressConnectionCloseException() throws Exception {
 		doThrow(new SQLException("sqlexception")).when(connection).close();
-		
-		assertThatThrownBy(() -> JDBCRunner.runQuery("", ds, 
-				throwRuntimeException("lambda")
-				)
-		)
-		.has(condition(ex -> containsSuppressedMessage(ex, "sqlexception")));
+
+		assertThatThrownBy(() -> JDBCRunner.runQuery("", ds, throwRuntimeException("lambda")))
+				.has(condition(ex -> containsSuppressedMessage(ex, "sqlexception")));
 	}
 
 	private SQLFunction<Object> throwRuntimeException(String message) {
-		return (PreparedStatement statement) -> {throw new RuntimeException(message);};
+		return (PreparedStatement st) -> {
+			throw new RuntimeException(message);
+		};
 	}
-	
+
 	@Test
 	public void shouldCloseConnectionAndStatementOnException() throws Exception {
-		assertThatThrownBy(() -> JDBCRunner.runQuery("", ds, 
-				throwRuntimeException("lambda")
-			)
-		);
-		
+		assertThatThrownBy(() -> JDBCRunner.runQuery("", ds, throwRuntimeException("lambda")));
+
 		verify(connection, Mockito.times(1)).close();
 		verify(statement, Mockito.times(1)).close();
 	}
-	
+
 	@Test
 	public void shouldCloseConnectionAndStatementOnCloseException() throws Exception {
 		doThrow(new SQLException("connection")).when(connection).close();
 		doThrow(new SQLException("statement")).when(statement).close();
-		
-		assertThatThrownBy(() -> JDBCRunner.runQuery("", ds, 
-				statement -> statement.executeQuery() 
-			)
-		);
-		
+
+		assertThatThrownBy(() -> JDBCRunner.runQuery("", ds, st -> st.executeQuery()));
+
 		verify(connection, Mockito.times(1)).close();
 		verify(statement, Mockito.times(1)).close();
 	}
-	
+
 	private boolean containsSuppressedMessage(Throwable ex, String suppressedMessage) {
 		return getCauses(ex.getSuppressed()).contains(suppressedMessage);
 	}
@@ -147,11 +133,11 @@ public class JDBCRunnerTest {
 			}
 		};
 	}
-	
+
 	private List<String> getCauses(Throwable[] suppressed) {
 		return arrayToStream(suppressed).map(ex -> ex.getMessage()).collect(toList());
 	}
-	
+
 	private Stream<Throwable> arrayToStream(Throwable[] suppressed) {
 		return Arrays.asList(suppressed).stream();
 	}
