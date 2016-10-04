@@ -19,8 +19,8 @@ public class E_OuterScopeInLambdas {
 		assertThat(addX.apply(4)).isEqualTo(7);
 	}
 
-	Function<Integer, Integer> addInt(Integer x) {
-		return (y) -> x + y;
+	Function<Integer, Integer> addInt(Integer y) {
+		return (z) -> y + z;
 	}
 
 	@Test
