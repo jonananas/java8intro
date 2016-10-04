@@ -2,6 +2,7 @@ package se.jonananas.teaching;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.function.BiFunction;
 import java.util.function.Function;
 
 import org.junit.Test;
@@ -54,4 +55,16 @@ public class B_LamdbaSyntacticSugar {
 
 		assertThat(stringToInt.apply("1")).isEqualTo(1);
 	}
+
+	@Test
+	public void methodReferenceToBiFunction() {
+		BiFunction<String, Integer, Double> toDouble = B_LamdbaSyntacticSugar::toDoubleStat;
+
+		assertThat(toDouble.apply("1.3", 4)).isEqualTo(5.3);
+	}
+
+	public static Double toDoubleStat(String s, Integer i) {
+		return Double.valueOf(s) + i;
+	}
+
 }
