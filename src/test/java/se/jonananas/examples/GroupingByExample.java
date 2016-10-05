@@ -1,7 +1,6 @@
 package se.jonananas.examples;
 
 import static java.util.stream.Collectors.groupingBy;
-import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.ArrayList;
@@ -9,25 +8,12 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Predicate;
-import java.util.stream.Stream;
 
 import org.junit.Test;
 
-public class MapExample {
+public class GroupingByExample {
 
 	List<String> namnlista = Arrays.asList("Ellen", "Mikael", "Eyadh", "Jonas");
-
-	@Test
-	public void shouldFilterNamesWithMoreThan10Chars() {
-		Predicate<String> mindreÄnTio = namn -> namn.length() < 10;
-		Predicate<String> predicate = (Predicate<String>) namn -> namn.length() > 5;
-		List<String> resultat = Stream.of("Ellen", "Mikael", "Eyadh", "Jonasas") //
-				.filter(predicate.and(mindreÄnTio))
-				.collect(toList());
-
-		assertThat(resultat).containsExactly("Mikael", "Jonasas");
-	}
 
 	@Test
 	public void groupByLength() {
