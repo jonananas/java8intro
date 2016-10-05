@@ -35,18 +35,16 @@ public class MapExample {
 		expectedByLength.put(5, Arrays.asList("Ellen", "Eyadh", "Jonas"));
 		expectedByLength.put(6, Arrays.asList("Mikael"));
 
-		Map<Integer, List<String>> resultMap = namnlista.stream() //
-				.collect(groupingBy(x -> x.length()));
-
-		assertThat(resultMap).isEqualTo(expectedByLength);
+		assertThat(functionalGroupByLength()).isEqualTo(expectedByLength);
+		assertThat(imperativeGroupByLength()).isEqualTo(expectedByLength);
 	}
 
-	@Test
-	public void imperative() {
-		Map<Integer, List<String>> expectedByLength = new HashMap<>();
-		expectedByLength.put(5, Arrays.asList("Ellen", "Eyadh", "Jonas"));
-		expectedByLength.put(6, Arrays.asList("Mikael"));
+	private Map<Integer, List<String>> functionalGroupByLength() {
+		return namnlista.stream() //
+				.collect(groupingBy(x -> x.length()));
+	}
 
+	private Map<Integer, List<String>> imperativeGroupByLength() {
 		Map<Integer, List<String>> resultMap = new HashMap<>();
 		for (String namn : namnlista) {
 			if (resultMap.get(namn.length()) == null) {
@@ -54,11 +52,10 @@ public class MapExample {
 			}
 			resultMap.get(namn.length()).add(namn);
 		}
-
-		assertThat(resultMap).isEqualTo(expectedByLength);
+		return resultMap;
 	}
-	// Övning: Gruppera på första bokstav i namnet
 
+	// Övning: Gruppera på första bokstav i namnet
 	@Test
 	public void groupByFirstLetter() {
 		Map<String, List<String>> expected = new HashMap<>();
