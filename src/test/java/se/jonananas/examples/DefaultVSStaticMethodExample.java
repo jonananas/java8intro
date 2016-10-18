@@ -21,7 +21,15 @@ public class DefaultVSStaticMethodExample {
 		}
 	}
 
-	public static class PersonImpl implements Person {
+	interface Snäll {
+
+		default String getName() {
+			return "Snäll";
+		}
+
+	}
+
+	public static class PersonImpl implements Person, Snäll {
 
 		private String firstName;
 		private String lastName;
@@ -39,6 +47,11 @@ public class DefaultVSStaticMethodExample {
 		@Override
 		public String getLastName() {
 			return lastName;
+		}
+
+		@Override
+		public String getName() {
+			return Snäll.super.getName();
 		}
 	}
 
