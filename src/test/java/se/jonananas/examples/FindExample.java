@@ -8,7 +8,7 @@ import java.util.stream.Stream;
 
 import org.junit.Test;
 
-public class Find {
+public class FindExample {
 
 	// Övning: Returnera ett udda slumpmässigt tal
 	// Sedan: ExG

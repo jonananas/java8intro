@@ -14,7 +14,7 @@ import java.util.stream.Stream;
 
 import org.junit.Test;
 
-public class FlatMap {
+public class FlatMapExample {
 
 	// These are in src/test/resources
 	List<String> filenames = Arrays.asList("a.txt", "b.txt", "c.txt", "d.txt");
