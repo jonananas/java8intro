@@ -1,4 +1,4 @@
-package se.jonananas.examples;
+package se.jonananas.teaching.streamingexamples;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

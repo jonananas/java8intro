@@ -1,4 +1,4 @@
-package se.jonananas.teaching;
+package se.jonananas.teaching.streamingslides;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
