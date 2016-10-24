@@ -1,7 +1,9 @@
 # Java 8 intro
 
-This project contains examples supporting a 3 hour session introducing Lambdas.
-It is also intended as a starting point for exercises from that session.
+This project contains examples and references to material supporting 5 x 3 hour sessions introducing Java 8 to absolute beginners.
+It is also intended as a starting point for exercises.
+
+** Slides and some code examples are in Swedish! **
 
 # Where to go from here
 We recommend 
@@ -14,4 +16,5 @@ We recommend
 # What's new in Java 8
 Oracles list of [What's New in JDK 8](http://www.oracle.com/technetwork/java/javase/8-whats-new-2157071.html)
 
-http://www.oracle.com/technetwork/java/javase/jdk7-relnotes-418459.html
+# What's new in Java 7
+Oracles list of [Java SE 7 Features and Enhancements](http://www.oracle.com/technetwork/java/javase/jdk7-relnotes-418459.html)
