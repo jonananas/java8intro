@@ -1,4 +1,4 @@
-package se.jonananas.teaching;
+package se.jonananas.teaching.streamingslides;
 
 import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -28,7 +28,7 @@ import org.mockito.Mockito;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import se.jonananas.teaching.JDBCRunner.SQLFunction;
+import se.jonananas.teaching.streamingslides.JDBCRunner.SQLFunction;
 
 @RunWith(CdiRunner.class)
 public class JDBCRunnerTest {

@@ -1,4 +1,4 @@
-package se.jonananas.teaching;
+package se.jonananas.teaching.streamingslides;
 
 import java.io.PrintWriter;
 import java.util.Optional;

@@ -1,4 +1,4 @@
-package se.jonananas.examples;
+package se.jonananas.teaching.streamingexamples;
 
 import static java.nio.file.Files.lines;
 import static java.nio.file.Paths.get;
