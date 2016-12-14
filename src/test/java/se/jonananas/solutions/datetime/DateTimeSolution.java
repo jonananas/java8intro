@@ -1,25 +1,36 @@
-package se.jonananas.exercises.datetime;
+package se.jonananas.solutions.datetime;
 
+import static java.time.DayOfWeek.FRIDAY;
+import static java.time.DayOfWeek.MONDAY;
 import static java.time.Month.APRIL;
+import static java.time.temporal.TemporalAdjusters.next;
+import static java.util.stream.Collectors.joining;
+import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.time.DayOfWeek;
 import java.time.Instant;
 import java.time.LocalDate;
+import java.time.Month;
 import java.time.Year;
 import java.time.YearMonth;
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.time.temporal.TemporalAdjusters;
 import java.util.List;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 import org.junit.Test;
 
 // From http://docs.oracle.com/javase/tutorial/datetime/iso/QandE/questions.html
 
-public class DateTime {
+public class DateTimeSolution {
 
 	// Given a random date, find the date of the previous Thursday!
 	@Test
 	public void findDateOfThursday() {
-		LocalDate previousThursday = null; // TODO: Implement!
+		LocalDate previousThursday = LocalDate.of(2016, 10, 24).with(TemporalAdjusters.previous(DayOfWeek.THURSDAY));
 
 		assertThat(previousThursday).isEqualTo(LocalDate.of(2016, 10, 20));
 	}
@@ -33,7 +44,10 @@ public class DateTime {
 	}
 
 	private String timeZoneIdStockholm(String needle) {
-		return null; // TODO: Implement!
+		return StreamSupport.stream(ZoneId.getAvailableZoneIds().spliterator(), false) //
+				.filter(x -> x.toString().toLowerCase().contains(needle.toLowerCase()))
+				.findFirst()
+				.orElseThrow(() -> new RuntimeException("Not found"));
 	}
 
 	// Convert an Instant to a ZonedDateTime! 
@@ -41,7 +55,7 @@ public class DateTime {
 	public void InstantToZonedDateTime() {
 		Instant instant = Instant.ofEpochSecond(1477312439);
 
-		ZonedDateTime zonedDateTime = null; // TODO: Implement!
+		ZonedDateTime zonedDateTime = instant.atZone(ZoneId.of("Europe/Stockholm"));
 
 		assertThat(zonedDateTime.toString()).isEqualTo("2016-10-24T14:33:59+02:00[Europe/Stockholm]");
 
@@ -67,7 +81,9 @@ public class DateTime {
 	}
 
 	private String lengthOfMonthPerYear(Year year) {
-		return null; // TODO: Implement!
+		return Stream.of(Month.values()) //
+				.map(month -> month.toString() + " " + year.atMonth(month).lengthOfMonth())
+				.collect(joining("\n"));
 	}
 
 	// Write an example that, for a given month of the current year, lists all of the Mondays in april
@@ -82,7 +98,12 @@ public class DateTime {
 	}
 
 	private List<LocalDate> allMondaysOfMonth(YearMonth yearMonth) {
-		return null; // TODO: Implement!
+		int MAXWEEKS_IN_MONTH = 5;
+		LocalDate firstMonday = yearMonth.atDay(01).with(next(MONDAY));
+		return Stream.iterate(firstMonday, date -> date.with(next(MONDAY))) //
+				.limit(MAXWEEKS_IN_MONTH)
+				.filter(date -> date.getMonth().equals(yearMonth.getMonth()))
+				.collect(toList());
 	}
 
 	// Find first Friday the 13th 2016
@@ -95,10 +116,10 @@ public class DateTime {
 	}
 
 	private LocalDate firstFriday13thOfYear(Year year) {
-		return null; // TODO: Implement!
-	}
-
-	public Boolean isFriday13th(LocalDate date) {
-		return null; // TODO: Implement!
+		return Stream.of(Month.values()) //
+				.map(month -> year.atMonth(month).atDay(13))
+				.filter(date -> date.getDayOfWeek() == FRIDAY)
+				.findFirst()
+				.get();
 	}
 }
