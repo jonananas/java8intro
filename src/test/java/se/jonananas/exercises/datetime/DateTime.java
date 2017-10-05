@@ -37,6 +37,7 @@ public class DateTime {
 	}
 
 	// Convert an Instant to a ZonedDateTime! 
+	@SuppressWarnings({ "null", "unused" })
 	@Test
 	public void InstantToZonedDateTime() {
 		Instant instant = Instant.ofEpochSecond(1477312439);

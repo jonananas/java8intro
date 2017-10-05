@@ -71,7 +71,6 @@ public class F_CaseForOptional {
 
 	}
 
-	@SuppressWarnings("unused")
 	public static class PersonRepository {
 
 		public Person findPersonMaybeNull(int id) {
