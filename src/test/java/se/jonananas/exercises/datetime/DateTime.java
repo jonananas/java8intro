@@ -21,7 +21,7 @@ public class DateTime {
 	public void findDateOfThursday() {
 		LocalDate previousThursday = null; // TODO: Implement!
 
-		assertThat(previousThursday).isEqualTo(LocalDate.of(2016, 10, 20));
+		assertThat(previousThursday).isEqualTo(LocalDate.of(2018, 03, 15));
 	}
 
 	// Find the timezone for stockholm!
